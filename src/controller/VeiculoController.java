@@ -9,16 +9,13 @@ import java.util.*;
 
 public class VeiculoController {
     public static Stack<String> logEmprestimos = new Stack<>();
-
     public void listarVeiculos(Veiculo[] veiculos) {
         for (int i = 0; i < veiculos.length; i++) {
             if (veiculos[i] != null) {
-
                 System.out.println(" Veiculo: " + (i + 1) + " --> " + veiculos[i].toString());
             }
         }
     }
-
     public void ordenarVeiculos(Veiculo[] veiculos) {
         Arrays.sort(veiculos);
     }
@@ -34,13 +31,13 @@ public class VeiculoController {
 
         for (int i = 0; i < 4; i++) {
             if (filaDeEspera.getFirst().getNome().equals(clientes[i].getNome())) {
-                for (int j = 0; j < veiculos.length; j++) {
-                    if ((veiculos[j].getModelo().equals(clientes[i].getVeiculoDesejado())) && veiculos[j].isAlugado() == false) {
-                        veiculos[j].setAlugado(true);
-                        clientes[i].setVeiculoAlugado(veiculos[j].getModelo());
+                for (Veiculo veiculo : veiculos) {
+                    if ((veiculo.getModelo().equals(clientes[i].getVeiculoDesejado())) && veiculo.isAlugado() == false) {
+                        veiculo.setAlugado(true);
+                        clientes[i].setVeiculoAlugado(veiculo.getModelo());
                         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy à's' HH:mm:ss");
                         logEmprestimos.push(dateFormat.format(Calendar.getInstance().getTime()) + ": Carro " +
-                                veiculos[j].getMarca() + ", " + veiculos[j].getModelo() + ", " + veiculos[j].getPlaca()
+                                veiculo.getMarca() + ", " + veiculo.getModelo() + ", " + veiculo.getPlaca()
                                 + ", foi EMPRESTADO para " + filaDeEspera.getFirst().getNome() + " Pela filial " + filial.getFilialNumero());
                     }
                 }
@@ -57,17 +54,16 @@ public class VeiculoController {
         for (int i = 0; i < 4; i++) {
             try {
                 if (nome.equals(clientes[i].getNome())) {
-                    for (int j = 0; j < veiculos.length; j++) {
-                        if ((clientes[i].getVeiculoAlugado().equals(veiculos[j].getModelo())) && (veiculos[j].isAlugado()) == true) {
-                            veiculos[j].setAlugado(false);
+                    for (Veiculo veiculo : veiculos) {
+                        if ((clientes[i].getVeiculoAlugado().equals(veiculo.getModelo())) && (veiculo.isAlugado()) == true) {
+                            veiculo.setAlugado(false);
                             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy à's' HH:mm:ss"); //formatar a data como 12/04/2022 às 16:37:15
                             logEmprestimos.push(dateFormat.format(Calendar.getInstance().getTime()) + ": Carro " +
-                                    veiculos[j].getMarca() + ", " + veiculos[j].getModelo() + ", " + veiculos[j].getPlaca()
+                                    veiculo.getMarca() + ", " + veiculo.getModelo() + ", " + veiculo.getPlaca()
                                     + ", foi DEVOLVIDO por " + nome + " Pela filial " + filial.getFilialNumero());
                         }
                     }
                     filaDeEspera.addLast(clientes[i]);
-                    //filaDeEspera.add(clientes[i]);
                     break;
                 }
             }catch (NullPointerException e){

@@ -22,7 +22,6 @@ public class Program {
         Veiculo[] veiculosFilial2 = geraVeiculosFilial2();
         Cliente[] clientesFilial2 = geraClientesFilial2();
 
-
         // Controllers
         VeiculoController veiculoController = new VeiculoController();
         ClienteController clienteController = new ClienteController();
@@ -30,7 +29,6 @@ public class Program {
 
         LinkedList<Cliente> filaDeEsperaFilial1 = new LinkedList<>();
         LinkedList<Cliente> filaDeEsperaFilial2 = new LinkedList<>();
-
 
         Filial filial = new Filial();
 
@@ -41,103 +39,120 @@ public class Program {
 
                 case 1:
                     System.out.println("\n============================== FIFTCARS ================================== \n Confira nossos modelos\n");
-                    System.out.println("===============> LISTA DE VEICULOS CADASTRADOS  FILIAL 01 <================\n");
+                    System.out.println("===============> LISTA DE VEICULOS CADASTRADOS - FILIAL 01 <================\n");
                     veiculoController.listarVeiculos(veiculosFilial1);
-                    System.out.println("===============> LISTA DE VEICULOS CADASTRADOS  FILIAL 02 <================\n");
+                    System.out.println("");
+                    System.out.println("===============> LISTA DE VEICULOS CADASTRADOS - FILIAL 02 <================\n");
                     veiculoController.listarVeiculos(veiculosFilial2);
+                    System.out.println("");
                     break;
-
                 case 2:
-                    System.out.println("=============== LISTA DE CLIENTES CADASTRADOS FILIAL 01 ===================\n");
+                    System.out.println("=============== LISTA DE CLIENTES CADASTRADOS - FILIAL 01 ==================\n");
                     clienteController.listarClientes(clientesFilial1);
-                    System.out.println("=============== LISTA DE CLIENTES CADASTRADOS FILIAL 02 ===================\n");
+                    System.out.println("");
+                    System.out.println("=============== LISTA DE CLIENTES CADASTRADOS - FILIAL 02 ==================\n");
                     clienteController.listarClientes(clientesFilial2);
+                    System.out.println("");
                     break;
                 case 3:
-                    System.out.println("=============== LISTA DE VEICULOS ORDENADOS POR MENOR VALOR =================");
                     veiculoController.ordenarVeiculos(veiculosFilial1);
                     veiculoController.ordenarVeiculos(veiculosFilial2);
-                    System.out.println("===============> LISTA DE VEICULOS ORDENADOS  FILIAL 01 <==================\n");
+                    System.out.println("");
+                    System.out.println("========> LISTA DE VEICULOS ORDENADOS POR MENOR VALOR - FILIAL 01 <==========\n");
                     veiculoController.listarVeiculos(veiculosFilial1);
-                    System.out.println("===============> LISTA DE VEICULOS ORDENADOS  FILIAL 02 <==================\n");
+                    System.out.println("");
+                    System.out.println("========> LISTA DE VEICULOS ORDENADOS POR MENOR VALOR - FILIAL 02 <==========\n");
                     veiculoController.listarVeiculos(veiculosFilial1);
+                    System.out.println("");
                     break;
                 case 4:
-                    System.out.println("=========== LISTA DE VEICULOS DISPONIVEIS PARA ALUGAR  FILIAL 01 ==========\n");
+                    System.out.println("=========== LISTA DE VEICULOS DISPONIVEIS PARA ALUGAR - FILIAL 01 ==========\n");
                     veiculoController.listarVeiculosDisponiveis(veiculosFilial1);
-                    System.out.println("=========== LISTA DE VEICULOS DISPONIVEIS PARA ALUGAR  FILIAL 02 ==========\n");
+                    System.out.println("");
+                    System.out.println("=========== LISTA DE VEICULOS DISPONIVEIS PARA ALUGAR - FILIAL 02 ==========\n");
                     veiculoController.listarVeiculosDisponiveis(veiculosFilial2);
+                    System.out.println("");
                     break;
                 case 5:
-                    System.out.println("================= CADASTRANDO LISTA DE ESPERA FILIAL 01 =====================\n");
+                    System.out.println("================= CADASTRANDO LISTA DE ESPERA - FILIAL 01 ===================\n");
                     clienteController.AddListaEspera(filaDeEsperaFilial1, clientesFilial1);
-                    System.out.println("================= CADASTRANDO LISTA DE ESPERA FILIAL 02 =====================\n");
+                    relatorioController.imprimeFilaDeEspera(filaDeEsperaFilial1);
+                    System.out.println("================= CADASTRANDO LISTA DE ESPERA - FILIAL 02 ===================\n");
                     clienteController.AddListaEspera(filaDeEsperaFilial2, clientesFilial2);
-
+                    relatorioController.imprimeFilaDeEspera(filaDeEsperaFilial2);
                     break;
                 case 6:
-                    System.out.println("========================= FILA DE ESPERA  FILIAL 01 =======================\n");
+                    System.out.println("========================= FILA DE ESPERA - FILIAL 01 =======================\n");
                     relatorioController.imprimeFilaDeEspera(filaDeEsperaFilial1);
-                    System.out.println("========================= FILA DE ESPERA  FILIAL 02 =======================\n");
+                    System.out.println("");
+                    System.out.println("========================= FILA DE ESPERA - FILIAL 02 =======================\n");
                     relatorioController.imprimeFilaDeEspera(filaDeEsperaFilial2);
-
+                    System.out.println("");
                     break;
                 case 7:
                     //Aluga veiculo para o primeiro da lista de espera
                     System.out.println("PARA QUAL FILIAL O VEICULO SERÁ ALUGADO? 1 ou 2");
                     int numFilial = sc.nextInt();
-                    if (numFilial == 1) {
-                        filial.setFilialNumero(1);
-                        veiculoController.emprestarVeiculo(filaDeEsperaFilial1, clientesFilial1, veiculosFilial1,filial);
-                        veiculoController.relatorioLocação();
-                    } else if (numFilial == 2) {
-                        filial.setFilialNumero(2);
-                        veiculoController.emprestarVeiculo(filaDeEsperaFilial2, clientesFilial2, veiculosFilial2,filial);
-                        veiculoController.relatorioLocação();
-                    } else {
-                        System.out.println("Entrada inválida");
+                    switch (numFilial) {
+                        case 1 -> {
+                            filial.setFilialNumero(1);
+                            veiculoController.emprestarVeiculo(filaDeEsperaFilial1, clientesFilial1, veiculosFilial1, filial);
+                            veiculoController.relatorioLocação();
+                        }
+                        case 2 -> {
+                            filial.setFilialNumero(2);
+                            veiculoController.emprestarVeiculo(filaDeEsperaFilial2, clientesFilial2, veiculosFilial2, filial);
+                            veiculoController.relatorioLocação();
+                        }
+                        default -> System.out.println("Entrada inválida");
                     }
                     break;
                 case 8:
                     System.out.println("=============================== DEVOLUÇÃO ===================================");
                     System.out.println("PARA QUAL FILIAL O VEICULO SERÁ DEVOLVIDO? 1 ou 2");
                     numFilial = sc.nextInt();
-                    if (numFilial == 1)  {
-                        filial.setFilialNumero(1);
-                        veiculoController.devolverVeiculo(filaDeEsperaFilial1, clientesFilial1, veiculosFilial1, filial);
-                        veiculoController.relatorioLocação();
-                    }else if(numFilial == 2){
-                        filial.setFilialNumero(2);
-                        veiculoController.devolverVeiculo(filaDeEsperaFilial2, clientesFilial2, veiculosFilial2, filial);
-                        veiculoController.relatorioLocação();
-                    }else {
-                        System.out.println("Entrada inválida");
+                    switch (numFilial) {
+                        case 1 -> {
+                            filial.setFilialNumero(1);
+                            veiculoController.devolverVeiculo(filaDeEsperaFilial1, clientesFilial1, veiculosFilial1, filial);
+                            veiculoController.relatorioLocação();
+                        }
+                        case 2 -> {
+                            filial.setFilialNumero(2);
+                            veiculoController.devolverVeiculo(filaDeEsperaFilial2, clientesFilial2, veiculosFilial2, filial);
+                            veiculoController.relatorioLocação();
+                        }
+                        default -> System.out.println("Entrada inválida");
                     }
                     break;
                 case 9:
-                    veiculoController.relatorioLocação();
-                    break;
-                case 10:
                     System.out.println("PARA QUAL FILIAL DESEJA O RELATORIO? 1 ou 2");
                     numFilial = sc.nextInt();
-                    if (numFilial == 1) {
-                        System.out.println("====================== RELATÓRIO DE LOCAÇÃO DA FILIAL 01 ==============\n");
-                        relatorioController.relatorioFiliais(veiculosFilial1, filaDeEsperaFilial1);
-                    } else if (numFilial == 2) {
-                        System.out.println("====================== RELATÓRIO DE LOCAÇÃO DA FILIAL 02 ==============\n");
-                        relatorioController.relatorioFiliais(veiculosFilial2, filaDeEsperaFilial2);
-                    } else {
-                        System.out.println("Entrada inválida");
+                    switch (numFilial) {
+                        case 1 -> {
+                            veiculoController.relatorioLocação();
+                            System.out.println("");
+                            System.out.println("====================== RELATÓRIO DE LOCAÇÃO - FILIAL 01 ==============\n");
+                            relatorioController.relatorioFiliais(veiculosFilial1, filaDeEsperaFilial1);
+                            System.out.println("");
+                                               }
+                        case 2 -> {
+                            veiculoController.relatorioLocação();
+                            System.out.println("");
+                            System.out.println("====================== RELATÓRIO DE LOCAÇÃO - FILIAL 02 ==============\n");
+                            relatorioController.relatorioFiliais(veiculosFilial2, filaDeEsperaFilial2);
+                            System.out.println("");
+                        }
+                        default -> System.out.println("Entrada inválida");
                     }
                     break;
-                case 11:
+                case 10:
                     break;
                 default:
                     System.out.println("Opção Inválida");
             }
         }
-
-        while(menu != 11);
+        while (menu != 10);
     }
 
     private static Veiculo[] geraVeiculosFilial1() {
@@ -169,6 +184,7 @@ public class Program {
                 255, false);
         return veiculos;
     }
+
     private static Cliente[] geraClientesFilial1() {
         Cliente[] clientes = new Cliente[4];
         clientes[0] = (new Cliente("Jorge", "011-2212-4563",
@@ -181,6 +197,7 @@ public class Program {
                 "Rua do Verde , numero 12, Centro - São Paulo", "FOX", null));
         return clientes;
     }
+
     private static Cliente[] geraClientesFilial2() {
         Cliente[] clientes = new Cliente[4];
         clientes[0] = (new Cliente("João", "011-1234-5678",
@@ -202,8 +219,7 @@ public class Program {
         System.out.println(" 3 - ORDENA  VEICULOS PELO MENOR VALOR  |   4 - CONSULTA VEICULO DISPONIVEL PARA ALUGAR");
         System.out.println(" 5 - CADASTRA LISTA DE ESPERA           |   6 - CONSULTA LISTA DE ESPERA");
         System.out.println(" 7 - ALUGA VEICULO                      |   8 - DEVOLVE VEICULO");
-        System.out.println(" 9 - LOG DE LOCAÇÃO                     |  10 - RELATORIO DAS FILIAIS ");
-        System.out.println("11 - SAIR ");
+        System.out.println(" 9 - RELATORIO DAS FILIAIS              |  10 - SAIR");
         System.out.println("=========================================================================================");
     }
 }
